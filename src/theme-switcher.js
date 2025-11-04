@@ -5,21 +5,25 @@
 
 class ThemeSwitcher {
     constructor() {
+        // Check if running locally or in production
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const basePath = isLocal ? 'node_modules/reveal.js/dist/theme/' : 'https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/';
+
         this.themes = {
-            'custom': 'src/themes/custom.css',
-            'professional': 'src/themes/professional.css',
-            'developer': 'src/themes/developer.css',
-            'black': 'node_modules/reveal.js/dist/theme/black.css',
-            'white': 'node_modules/reveal.js/dist/theme/white.css',
-            'league': 'node_modules/reveal.js/dist/theme/league.css',
-            'sky': 'node_modules/reveal.js/dist/theme/sky.css',
-            'beige': 'node_modules/reveal.js/dist/theme/beige.css',
-            'simple': 'node_modules/reveal.js/dist/theme/simple.css',
-            'serif': 'node_modules/reveal.js/dist/theme/serif.css',
-            'blood': 'node_modules/reveal.js/dist/theme/blood.css',
-            'night': 'node_modules/reveal.js/dist/theme/night.css',
-            'moon': 'node_modules/reveal.js/dist/theme/moon.css',
-            'solarized': 'node_modules/reveal.js/dist/theme/solarized.css'
+            'custom': './src/themes/custom.css',
+            'professional': './src/themes/professional.css',
+            'developer': './src/themes/developer.css',
+            'black': basePath + 'black.css',
+            'white': basePath + 'white.css',
+            'league': basePath + 'league.css',
+            'sky': basePath + 'sky.css',
+            'beige': basePath + 'beige.css',
+            'simple': basePath + 'simple.css',
+            'serif': basePath + 'serif.css',
+            'blood': basePath + 'blood.css',
+            'night': basePath + 'night.css',
+            'moon': basePath + 'moon.css',
+            'solarized': basePath + 'solarized.css'
         };
 
         this.currentTheme = 'custom';

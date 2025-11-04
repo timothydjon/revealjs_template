@@ -7,7 +7,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "vite",
-    "build": "vite build",
+    "build": "node build.js",
     "preview": "vite preview",
     "deploy": "npm run build && gh-pages -d dist",
     "new": "node create-presentation.js"

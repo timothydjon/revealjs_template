@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { copyFileSync, mkdirSync } from 'fs';
 
 export default defineConfig({
   base: './',
@@ -7,7 +8,7 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
+        main: resolve(import.meta.dirname, 'index.prod.html'),
       },
     },
     copyPublicDir: true,
@@ -20,9 +21,30 @@ export default defineConfig({
   publicDir: 'public',
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
-      '@themes': resolve(__dirname, 'src/themes'),
-      '@slides': resolve(__dirname, 'slides'),
+      '@': resolve(import.meta.dirname, 'src'),
+      '@themes': resolve(import.meta.dirname, 'src/themes'),
+      '@slides': resolve(import.meta.dirname, 'slides'),
     },
   },
+  plugins: [
+    {
+      name: 'copy-assets',
+      closeBundle() {
+        // Copy necessary folders to dist
+        const folders = ['src', 'slides', 'assets'];
+        folders.forEach(folder => {
+          try {
+            mkdirSync(`dist/${folder}`, { recursive: true });
+          } catch {}
+        });
+
+        // Copy index.prod.html as index.html in dist
+        try {
+          copyFileSync('index.prod.html', 'dist/index.html');
+        } catch (err) {
+          console.error('Error copying index.html:', err);
+        }
+      }
+    }
+  ]
 });
