@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentation Title</title>
+
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/black.css" id="theme">
+
+    <!-- Custom theme overrides -->
+    <link rel="stylesheet" href="src/themes/custom.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="node_modules/reveal.js/plugin/highlight/monokai.css">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slides will be loaded from markdown -->
+            <section data-markdown="slides/presentation.md"
+                     data-separator="^---$"
+                     data-separator-vertical="^--$"
+                     data-separator-notes="^Note:"
+                     data-charset="utf-8">
+            </section>
+        </div>
+    </div>
+
+    <!-- Reveal.js JavaScript -->
+    <script src="node_modules/reveal.js/dist/reveal.js"></script>
+    <script src="node_modules/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+    <script src="node_modules/reveal.js/plugin/notes/notes.js"></script>
+    <script src="node_modules/reveal.js/plugin/math/math.js"></script>
+    <script src="node_modules/reveal.js/plugin/zoom/zoom.js"></script>
+    <script src="node_modules/reveal.js/plugin/search/search.js"></script>
+
+    <!-- Configuration -->
+    <script src="src/config.js"></script>
+
+    <!-- Theme Switcher -->
+    <script src="src/theme-switcher.js"></script>
+</body>
+</html>

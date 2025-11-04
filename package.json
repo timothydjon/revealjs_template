@@ -1,0 +1,31 @@
+{
+  "name": "reveal-presentation-template",
+  "version": "1.0.0",
+  "description": "A reusable Reveal.js presentation template with markdown support and easy theming",
+  "type": "module",
+  "main": "index.html",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist",
+    "new": "node create-presentation.js"
+  },
+  "keywords": [
+    "reveal.js",
+    "presentation",
+    "slides",
+    "markdown"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "reveal.js": "^5.0.4"
+  },
+  "devDependencies": {
+    "vite": "^5.0.8",
+    "gh-pages": "^6.1.0",
+    "@types/reveal.js": "^5.0.0"
+  }
+}

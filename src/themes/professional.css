@@ -1,0 +1,46 @@
+/**
+ * Professional Theme - Clean and corporate style
+ */
+
+/* Import fonts first */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@400;600;700&display=swap');
+@import './custom.css';
+
+:root {
+    /* Override color palette for professional look */
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --background-color: #ecf0f1;
+    --text-color: #2c3e50;
+    --heading-color: #2c3e50;
+
+    /* Typography - more conservative */
+    --main-font: 'Roboto', 'Arial', sans-serif;
+    --heading-font: 'Roboto Slab', 'Georgia', serif;
+}
+
+.reveal {
+    background: var(--background-color);
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.reveal .slides {
+    color: var(--text-color);
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4 {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.reveal .title-slide h1 {
+    color: var(--primary-color);
+    text-shadow: none;
+    border-bottom: 3px solid var(--accent-color);
+    padding-bottom: 20px;
+    display: inline-block;
+}
