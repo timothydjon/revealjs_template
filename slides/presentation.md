@@ -60,6 +60,76 @@ print(calculate_fibonacci(10))
 
 ---
 
+## Code Highlighting
+
+Highlight specific lines to focus attention
+
+```javascript [1-2|4-6|8-10]
+// Import required modules
+import { useState, useEffect } from 'react';
+
+// Define the component
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  // Update count on button click
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Count: {count}
+    </button>
+  );
+}
+```
+
+Note: Lines highlight progressively as you advance through the slide
+
+---
+
+## Code Highlighting with Line Numbers
+
+Show line numbers for better reference
+
+```python [1|3-5|7-8]
+def factorial(n):
+    """Calculate factorial of n"""
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+# Calculate factorial of 5
+result = factorial(5)
+print(f"Factorial: {result}")
+```
+
+Note: Combine line numbers with step-by-step highlighting
+
+---
+
+## Advanced Code Highlighting
+
+Multiple language support with focused highlighting
+
+```java [1,8|3-6|10-12]
+public class Example {
+    
+    public static void main(String[] args) {
+        String message = "Hello, World!";
+        System.out.println(message);
+    }
+    
+    private static void helper() {
+        // Helper method
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Value: " + i);
+        }
+    }
+}
+```
+
+Note: Highlight specific lines, ranges, or combinations
+
+---
+
 ## Two-Column Layout
 
 <div class="columns">
