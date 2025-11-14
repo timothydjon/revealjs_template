@@ -26,10 +26,10 @@
 
     /* Font Sizes */
     --main-font-size: 38px;
-    --heading1-size: 2.5em;
-    --heading2-size: 1.6em;
-    --heading3-size: 1.3em;
-    --heading4-size: 1.0em;
+    --heading1-size: 36px;
+    --heading2-size: 36px;
+    --heading3-size: 28px;
+    --heading4-size: 24px;
 
     /* Code Blocks */
     --code-background: #0d1117;
@@ -136,7 +136,7 @@
     width: 100%;
     margin: var(--block-margin) auto;
     text-align: left;
-    font-size: 0.55em;
+    font-size: 14px;
     font-family: var(--code-font);
     line-height: 1.2em;
     background: var(--code-background);
