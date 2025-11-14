@@ -1,0 +1,69 @@
+/**
+ * Developer Theme - Dark mode with syntax highlighting focus
+ */
+
+/* Import fonts first */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap');
+@import './custom.css';
+
+:root {
+    /* Developer-friendly dark theme */
+    --primary-color: #61dafb;  /* React blue */
+    --secondary-color: #98c379; /* Green */
+    --accent-color: #e06c75;   /* Red */
+    --background-color: #282c34;
+    --text-color: #abb2bf;
+    --heading-color: #61dafb;
+
+    /* Monospace-first typography */
+    --main-font: 'JetBrains Mono', 'Fira Code', monospace;
+    --heading-font: 'JetBrains Mono', 'Fira Code', monospace;
+    --code-font: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Atom One Dark colors for syntax */
+    --code-background: #1e2127;
+}
+
+.reveal {
+    background: var(--background-color);
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.02) 2px,
+            rgba(255, 255, 255, 0.02) 4px
+        );
+}
+
+.reveal h1::before {
+    content: '# ';
+    color: var(--accent-color);
+    opacity: 0.5;
+}
+
+.reveal h2::before {
+    content: '## ';
+    color: var(--accent-color);
+    opacity: 0.5;
+}
+
+.reveal h3::before {
+    content: '### ';
+    color: var(--accent-color);
+    opacity: 0.5;
+}
+
+.reveal code {
+    background: var(--code-background);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--secondary-color);
+}
+
+.reveal .title-slide h1 {
+    font-family: var(--code-font);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
