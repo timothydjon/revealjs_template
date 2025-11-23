@@ -2,11 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ '**' ]  # Deploy all branches
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -15,10 +15,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout current branch
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -30,118 +30,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build project
+      - name: Build all presentations
         run: npm run build
 
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: gh-pages
-        continue-on-error: true
-
-      - name: Initialize gh-pages if needed
-        run: |
-          if [ ! -d "gh-pages/.git" ]; then
-            echo "gh-pages branch doesn't exist, creating it..."
-            mkdir -p gh-pages
-            cd gh-pages
-            git init -b gh-pages
-            git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          fi
-
-      - name: Get branch name
-        id: branch
-        run: |
-          BRANCH_NAME=${GITHUB_REF#refs/heads/}
-          SAFE_BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's/[^a-zA-Z0-9._-]/_/g')
-          echo "name=$SAFE_BRANCH_NAME" >> $GITHUB_OUTPUT
-          echo "original=$BRANCH_NAME" >> $GITHUB_OUTPUT
-
-      - name: Deploy to branch subdirectory
-        run: |
-          mkdir -p gh-pages/${{ steps.branch.outputs.name }}
-          rm -rf gh-pages/${{ steps.branch.outputs.name }}/*
-          cp -r dist/* gh-pages/${{ steps.branch.outputs.name }}/
-
-      - name: Generate index page
-        run: |
-          cd gh-pages
-          cat > index.html << 'EOF'
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>Presentations - Available Branches</title>
-              <style>
-                  body {
-                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-                      max-width: 800px;
-                      margin: 50px auto;
-                      padding: 20px;
-                      background: #1a1a2e;
-                      color: #eee;
-                  }
-                  h1 { color: #3498db; }
-                  ul { list-style: none; padding: 0; }
-                  li {
-                      margin: 15px 0;
-                      padding: 15px;
-                      background: rgba(255,255,255,0.05);
-                      border-radius: 8px;
-                      border-left: 4px solid #3498db;
-                  }
-                  a {
-                      color: #3498db;
-                      text-decoration: none;
-                      font-size: 1.2em;
-                  }
-                  a:hover { text-decoration: underline; }
-                  .timestamp {
-                      color: #999;
-                      font-size: 0.9em;
-                      margin-top: 5px;
-                  }
-              </style>
-          </head>
-          <body>
-              <h1>📊 Available Presentations</h1>
-              <ul>
-          EOF
-
-          for dir in */; do
-              if [ -d "$dir" ] && [ -f "$dir/index.html" ]; then
-                  branch_name="${dir%/}"
-                  timestamp=$(date -u +"%Y-%m-%d %H:%M UTC")
-                  echo "<li><a href=\"$dir\">$branch_name</a><div class=\"timestamp\">Last updated: $timestamp</div></li>" >> index.html
-              fi
-          done
-
-          cat >> index.html << 'EOF'
-              </ul>
-          </body>
-          </html>
-          EOF
-
-      - name: Commit and push to gh-pages
-        run: |
-          cd gh-pages
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Deploy ${{ steps.branch.outputs.original }} branch" || exit 0
-          git push origin HEAD:gh-pages
-
-      - name: Setup Pages (first time only)
-        if: github.event_name == 'workflow_dispatch'
+      - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Comment deployment URL
-        uses: actions/github-script@v7
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          script: |
-            const branch = '${{ steps.branch.outputs.name }}';
-            const repo = context.repo;
-            const url = `https://${repo.owner}.github.io/${repo.repo}/${branch}/`;
-            console.log(`Deployed to: ${url}`);
+          path: './dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
