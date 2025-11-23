@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentation Selector - Dev Mode</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        h1 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .presentations {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .card {
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        .card h2 {
+            color: #3498db;
+            margin: 0 0 10px 0;
+            font-size: 1.3em;
+        }
+        .card a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .card a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Development Mode - Select Presentation</h1>
+    <div class="presentations">
+        <div class="card">
+            <h2>MCP BarCamp 2025</h2>
+            <a href="/mcp-barcamp2025.html">▶️ View Presentation</a>
+            <p>How MCP is Revolutionizing AI Agent Development</p>
+        </div>
+        <div class="card">
+            <h2>Template</h2>
+            <a href="/template.html">▶️ View Presentation</a>
+            <p>Basic template presentation</p>
+        </div>
+    </div>
+</body>
+</html>

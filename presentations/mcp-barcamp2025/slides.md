@@ -7,247 +7,284 @@
 <div class="author">Timothy - BarCamp 2025</div>
 <div class="date">November 2025</div>
 
-Note: Welcome! Today we're exploring MCP - Model Context Protocol - and why it's changing how we build AI agents. We're going to be technical, practical, and focused. Press 'S' for speaker notes.
+Note: Welcome! Today we're exploring MCP - Model Context Protocol - and why it's changing how we build AI agents. Press 'S' for speaker notes.
 
 ---
 
 <!-- .slide: data-background-color="#e74c3c" -->
 
-## The Brain in a Jar Problem
+# The Problem
 
-<div style="text-align: center; margin: 40px 0;">
-<i class="fas fa-brain" style="font-size: 5em; color: #fff;"></i>
-<p style="font-size: 0.9em; color: #fff; margin-top: 20px;">LLMs are trapped behind text boxes</p>
-</div>
-
-<div class="columns" style="margin-top: 40px;">
+<div class="columns">
   <div class="column">
 
-**Can Talk About:**
-- Linear tickets
-- GitHub PRs
-- Database queries
-- Slack messages
+### N AI Apps
+
+- ChatGPT
+- Claude
+- Copilot
+- Custom agents
 
   </div>
   <div class="column">
 
-**Can't Actually:**
-- ❌ Create tickets
-- ❌ Merge code
-- ❌ Query data
-- ❌ Send messages
+### M Data Sources
+
+- Slack
+- GitHub
+- Databases
+- Google Drive
 
   </div>
 </div>
 
-<h3 class="fragment" style="color: #fff; margin-top: 40px;">
-N AI Tools × M Data Sources = N×M Integration Hell
-</h3>
+<h2 class="fragment" style="color: #fff; margin-top: 40px;">= N×M custom integrations</h2>
 
-Note: LLMs are incredibly smart but isolated. They can discuss work eloquently but can't DO work. Every AI tool needs custom integrations for every data source. 5 AI tools × 10 systems = 50 custom integrations. This is unsustainable.
+Note: Every AI app needs custom code for every data source. 5 apps × 10 sources = 50 integrations. This doesn't scale.
+
+---
+
+## Today's Reality
+
+```python
+# Every AI tool needs its own integration
+chatgpt_slack = SlackAPI(token_1)
+claude_github = GitHubAPI(credentials)
+copilot_db = PostgreSQL(conn)
+
+# Different APIs, different auth, different patterns
+```
+
+<p class="fragment" style="color: #e74c3c; margin-top: 30px;">
+<i class="fas fa-times"></i> Fragmented • Duplicated • Doesn't scale
+</p>
+
+Note: Modern AI agents need access to YOUR data. But every tool requires custom integrations. We're all solving the same problem repeatedly.
 
 ---
 
 <!-- .slide: data-background-color="#16a085" -->
 
-## The Solution: MCP = USB-C for AI
+# Enter MCP
 
-<div style="text-align: center; margin: 40px 0;">
-<i class="fas fa-plug" style="font-size: 5em; color: #fff;"></i>
-</div>
+**Model Context Protocol**
 
-**Model Context Protocol** - One standard, infinite connections
+Universal standard for connecting AI to data
 
-<div class="columns" style="margin-top: 40px;">
-  <div class="column">
+<p style="font-size: 0.9em; margin-top: 40px;">Like USB-C for AI agents</p>
 
-### Write Once
-Build one MCP server for your data
-
-  </div>
-  <div class="column">
-
-### Works Everywhere
-- Claude Desktop
-- VS Code / Cursor
-- Any MCP client
-- Future AI tools
-
-  </div>
-</div>
-
-Note: MCP is the USB-C port for AI. Just like USB-C standardized device connections, MCP standardizes AI-to-data connections. Write your server once, and it works with Claude, IDEs, and future agents simultaneously. No more N×M problem.
+Note: MCP is an open protocol. One standard way to connect any AI to any data source. Write once, use everywhere.
 
 ---
 
-## Architecture
+## How It Works
 
 ```
-┌──────────────┐                    ┌──────────────┐
-│     Host     │                    │  MCP Server  │
-│   (Claude)   │◄──────MCP─────────►│  (Your Data) │
-└──────────────┘                    └──────────────┘
-                   JSON-RPC 2.0
-                  stdio or HTTP
+┌─────────────┐                      ┌──────────────┐
+│ AI Client   │                      │  MCP Server  │
+│ (Claude)    │                      │  (Your Data) │
+└──────┬──────┘                      └──────┬───────┘
+       │                                    │
+       │         ┌──────────────┐           │
+       └────────►│  JSON-RPC    │◄──────────┘
+                 │ stdio / HTTP │
+                 └──────────────┘
 ```
 
-<div class="columns" style="margin-top: 40px;">
+<div class="columns" style="margin-top: 20px;">
   <div class="column">
 
-**Server Exposes:**
+**Server** exposes:
+
 - Resources (data)
 - Tools (actions)
 - Prompts (templates)
-- **NEW: UI (interfaces)**
 
   </div>
   <div class="column">
 
-**Transport:**
-- Local: stdio
-- Remote: HTTP+SSE
-- Standard: JSON-RPC 2.0
+**Protocol:**
+
+- JSON-RPC 2.0
+- stdio or HTTP
 
   </div>
 </div>
 
-Note: Simple, clean architecture. MCP Servers expose your data and tools. Hosts (AI applications) connect via JSON-RPC 2.0. Can be local using stdio or remote using HTTP with Server-Sent Events. The protocol is standardized, proven, and simple.
+Note: Simple architecture. MCP servers expose your data and tools. MCP clients (AI apps) connect via JSON-RPC. Can be local or remote.
 
 ---
 
-## Building a Secure MCP Server
+## Building an MCP Server
 
 ```python
-# mcp_server.py
-from mcp.server.fastmcp import FastMCP
+from mcp.server import Server
 
-mcp = FastMCP("Secure-DB")
+server = Server("customer-crm")
 
-@mcp.tool()
-def query_customer_data(customer_id: str) -> str:
-    """Read-only access to customer records"""
+@server.tool()
+async def get_customer(customer_id: str):
+    """Fetch customer from CRM"""
+    customer = await db.query(customer_id)
+    return {
+        "name": customer.name,
+        "email": customer.email,
+        "status": customer.status
+    }
 
-    # SECURITY: We control the access here, not the LLM
-    if not is_authorized(customer_id):
-        return "Error: Unauthorized"
+@server.tool()
+async def create_ticket(customer_id: str, issue: str):
+    """Create support ticket"""
+    return await tickets.create(customer_id, issue)
+```
 
-    return db.execute(
-        "SELECT * FROM customers WHERE id = ?",
-        customer_id
+Note: This is a complete MCP server. Two tools wrapped with decorators. That's it. Any MCP client can now use these tools to access your CRM and create tickets.
+
+---
+
+## Real Example: Slack
+
+```python
+from mcp.server import Server
+import slack_sdk
+
+server = Server("slack")
+
+@server.tool()
+async def send_message(channel: str, text: str):
+    """Send Slack message"""
+    client = slack_sdk.WebClient(token=SLACK_TOKEN)
+    response = client.chat_postMessage(
+        channel=channel,
+        text=text
     )
+    return {"ok": response["ok"]}
 
-# Server automatically handles JSON-RPC protocol
+@server.tool()
+async def get_history(channel: str, limit: int = 10):
+    """Get recent messages"""
+    client = slack_sdk.WebClient(token=SLACK_TOKEN)
+    response = client.conversations_history(
+        channel=channel,
+        limit=limit
+    )
+    return [{"user": m["user"], "text": m["text"]}
+            for m in response["messages"]]
+```
+
+Note: Real Slack integration. Two tools: send messages and read history. This MCP server gives any AI access to your Slack workspace through a standard protocol.
+
+---
+
+## Database Example
+
+```python
+server = Server("postgres")
+
+@server.tool()
+async def query(sql: str):
+    """Execute SQL query (read-only)"""
+    # Security: only allow SELECT
+    if not sql.strip().upper().startswith("SELECT"):
+        return {"error": "Only SELECT allowed"}
+
+    conn = await asyncpg.connect(DATABASE_URL)
+    results = await conn.fetch(sql)
+    await conn.close()
+
+    return [dict(row) for row in results]
 ```
 
 <p style="font-size: 0.9em; margin-top: 30px;">
-<i class="fas fa-shield-alt" style="color: #2ecc71;"></i> **Key Point:** You control security at the server level, not the AI
+<i class="fas fa-shield-alt"></i> Security built-in • Host controls permissions
 </p>
 
-Note: This is enterprise-ready code. The MCP server controls what the AI can access. We validate permissions, sanitize inputs, and restrict operations. The AI can only do what you explicitly allow. This is how you safely connect AI to production databases.
+Note: Database server with security. Only allows SELECT queries. AI can explore your schema and query data safely. You control permissions at the server level.
 
 ---
 
-## The Missing Link: Configuration
+## The Protocol
 
 ```json
-// claude_desktop_config.json
+// Client → Server
 {
-  "mcpServers": {
-    "my-db": {
-      "command": "uv",
-      "args": ["run", "mcp-server-postgres",
-               "--url", "postgres://..."]
-    },
-    "github": {
-      "command": "npx",
-      "args": ["@modelcontextprotocol/server-github"]
-    }
+  "method": "tools/call",
+  "params": {
+    "name": "get_customer",
+    "arguments": {"customer_id": "12345"}
+  }
+}
+
+// Server → Client
+{
+  "result": {
+    "name": "Acme Corp",
+    "email": "contact@acme.com",
+    "status": "active"
   }
 }
 ```
 
-<div style="margin-top: 40px;">
-
-**No client code needed. Just config.**
-
-- Drop in config file
-- Restart Claude
-- Your data is connected
-
-</div>
-
-Note: This is the magic - no client code! Just configuration. Drop this JSON in Claude's config directory, restart, and your MCP servers are connected. The Host handles all the protocol complexity. You just point to your servers.
+Note: Under the hood it's simple JSON-RPC 2.0 messages. Same protocol used by VS Code extensions. Proven and reliable.
 
 ---
 
 <!-- .slide: data-background-color="#8e44ad" -->
 
-## New in Nov 2025: MCP Apps & UI
+## Real-World Adoption
+
+### Pre-built Servers
+
+Google Drive • Slack • GitHub • PostgreSQL • MongoDB • Filesystem • Git • Docker
+
+### Companies Using MCP
+
+**OpenAI** • **Google DeepMind** • **Zed** • **Replit** • **Sourcegraph**
+
+<p style="margin-top: 40px;">Thousands of community servers available</p>
+
+Note: This isn't theoretical. Pre-built servers exist for common services. Major AI companies and dev tools have adopted MCP. The ecosystem is growing fast.
+
+---
+
+## The Impact
 
 <div class="columns">
   <div class="column">
 
-### Yesterday (Text Only)
+### Before
+
+```python
+# 50 integrations
+SlackAPI_v1()
+SlackAPI_v2()
+CustomClient()
+# ... 47 more
 ```
-User: "Show AAPL stock"
-AI: "Apple is at $150.20"
-```
-Just text. Static. Limited.
 
   </div>
   <div class="column">
 
-### Today (MCP Apps)
+### After
+
+```python
+# 1 MCP server
+@server.tool()
+def slack_send():
+    pass
+
+# Works with ALL
+# MCP clients!
 ```
-User: "Show AAPL stock"
-AI: [Interactive Chart UI]
-```
-<small>Live candlestick chart embedded in chat!</small>
 
   </div>
 </div>
 
-<div style="margin-top: 40px;">
+<h3 style="color: #2ecc71; margin-top: 30px;">
+Write once, use everywhere
+</h3>
 
-**Technical Detail:** MCP servers can now return `ui://` resources
-- Sandboxed HTML/JS interfaces
-- Interactive components in chat
-- Live data visualization
-- Forms and inputs
-
-</div>
-
-Note: Game changer! MCP isn't just a data pipe anymore. Servers can return actual UI components. Ask for stock data, get an interactive chart. Ask for a form, get live inputs. The UI renders directly in the chat window, sandboxed and secure. This is the future of AI interaction.
-
----
-
-## The Ecosystem
-
-<div style="text-align: center;">
-
-### Pre-built MCP Servers
-
-<div style="font-size: 2em; margin: 30px 0;">
-  <i class="fab fa-github"></i>
-  <i class="fab fa-google-drive" style="margin-left: 30px;"></i>
-  <i class="fab fa-slack" style="margin-left: 30px;"></i>
-  <i class="fas fa-database" style="margin-left: 30px;"></i>
-</div>
-
-**GitHub • Google Drive • Slack • PostgreSQL • MongoDB • Linear • Notion**
-
-</div>
-
-<div style="margin-top: 40px;">
-
-### Who's Using MCP
-
-**Anthropic Claude** • **Cursor** • **Zed** • **Replit** • **Sourcegraph**
-
-</div>
-
-Note: The ecosystem is thriving. Pre-built servers for major platforms exist today. Major AI and developer tools have adopted MCP. This isn't experimental - it's production-ready and growing fast.
+Note: Instead of N×M integrations, write ONE MCP server. Every MCP-compatible AI can use it. ChatGPT, Claude, future tools - all work immediately.
 
 ---
 
@@ -258,47 +295,120 @@ Note: The ecosystem is thriving. Pre-built servers for major platforms exist tod
 pip install mcp
 
 # Create server
-from mcp.server.fastmcp import FastMCP
+from mcp.server import Server
+server = Server("my-service")
 
-mcp = FastMCP("my-service")
-
-@mcp.tool()
+@server.tool()
 async def my_tool(param: str):
-    # Your business logic here
-    return {"result": "data"}
+    return {"result": "your business logic"}
 
-# That's it. 5 lines to production.
+# Run
+async with stdio_server() as (read, write):
+    await server.run(read, write)
 ```
 
-<div style="margin-top: 40px;">
-<p style="font-size: 0.9em;">
-<i class="fas fa-book"></i> **Docs:** modelcontextprotocol.io
-<i class="fab fa-github" style="margin-left: 30px;"></i> **GitHub:** github.com/modelcontextprotocol
+<p style="margin-top: 30px; font-size: 0.9em;">
+<i class="fas fa-book"></i> modelcontextprotocol.io • <i class="fab fa-github"></i> github.com/modelcontextprotocol
 </p>
+
+Note: Getting started is straightforward. Install SDK, wrap your code, run it. Test with Claude Code which has built-in MCP support. Full docs available.
+
+---
+
+<!-- .slide: data-background-color="#2c3e50" -->
+
+## The Vision
+
+> "Open technologies like MCP are bridges that connect AI to real-world applications"
+>
+> <small>— Jack Dorsey, Block CTO</small>
+
+<div style="margin-top: 50px;">
+
+- Any AI agent + Any data source
+- Write once, use everywhere
+- Open standard, not vendor lock-in
+
 </div>
 
-Note: Dead simple to start. Install the SDK, create a server, add tools with decorators. Your existing business logic becomes AI-accessible. Five lines of code and you're in production. Full documentation and examples available.
+Note: We're building the infrastructure layer for AI. One standard protocol so any agent can access any data. Open source, community-driven.
 
 ---
 
 <!-- .slide: class="title-slide" data-background-color="#16a085" -->
 
-# Start Building
+# Call to Action
 
 <div style="margin-top: 50px;">
 
-## <i class="fas fa-rocket"></i> Your Next Steps
+## <i class="fas fa-code"></i> Start Building
 
-1. **Pick one data source** (start small)
-2. **Build an MCP server** (use the examples)
-3. **Connect to Claude** (just config)
-4. **Share with the community**
+Pick one data source, create an MCP server
+
+## <i class="fas fa-users"></i> Join the Community
+
+GitHub • Discord • Open source
+
+## <i class="fas fa-rocket"></i> Stop one-off integrations
+
+Build for the ecosystem
 
 </div>
 
-<div style="margin-top: 60px; font-size: 0.9em;">
-<p><i class="fas fa-globe"></i> modelcontextprotocol.io</p>
-<p><i class="fab fa-github"></i> github.com/modelcontextprotocol</p>
+Note: Start small - pick one data source and build an MCP server. Join the community. Most importantly, stop building one-off integrations. Build MCP servers that work with every AI tool.
+
+---
+
+## Resources
+
+<div class="columns">
+  <div class="column">
+
+### Docs
+
+[modelcontextprotocol.io](https://modelcontextprotocol.io)
+
+### GitHub
+
+[github.com/modelcontextprotocol](https://github.com/modelcontextprotocol)
+
+  </div>
+  <div class="column">
+
+### Install
+
+```bash
+pip install mcp
+```
+
+### Quick Start
+
+```python
+from mcp.server import Server
+server = Server("my-data")
+
+@server.tool()
+async def my_tool():
+    return {"data": "..."}
+```
+
+  </div>
 </div>
 
-Note: Stop building one-off integrations. Start building for the ecosystem. Pick your most important data source, build an MCP server, and connect it to Claude. Share it with the community. Let's build the future of AI integration together. Thank you!
+Note: All resources you need. Full documentation, examples, SDKs. Everything is open source. Start building today.
+
+---
+
+<!-- .slide: class="title-slide" -->
+
+# Thank You!
+
+## Questions?
+
+<div class="author" style="margin-top: 60px;">
+  <i class="fas fa-globe"></i> modelcontextprotocol.io<br>
+  <i class="fab fa-github"></i> github.com/modelcontextprotocol<br>
+  <i class="fas fa-code"></i> Start building with MCP today!
+</div>
+
+Note: Thanks for your attention! I'm excited to answer questions about MCP, implementation details, use cases, or anything else.
