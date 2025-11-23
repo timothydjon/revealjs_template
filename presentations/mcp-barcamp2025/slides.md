@@ -11,6 +11,107 @@ Note: Welcome! Today we're exploring MCP - Model Context Protocol - and why it's
 
 ---
 
+## What Are AI Agents?
+
+<div class="fragment">
+
+**Not just chatbots anymore**
+
+AI systems that can:
+- Understand complex goals
+- Break down tasks into steps
+- Use tools to take actions
+- Iterate until completion
+
+</div>
+
+<p class="fragment" style="margin-top: 40px; font-size: 1.2em;">
+They <strong>do work</strong>, not just talk about it
+</p>
+
+Note: Let's start with basics. AI agents are fundamentally different from chatbots. Chatbots respond to messages. Agents actually DO things. They take your high-level goal, figure out the steps, use tools, and execute until the job is done. Think of it as the difference between a consultant who gives advice versus an assistant who actually does the work.
+
+---
+
+## Modern AI Agents You Can Use Today
+
+<div class="columns">
+  <div class="column">
+
+### Coding Assistants
+- **Cursor** - AI-powered IDE
+- **Windsurf** - Agentic editor
+- **Claude Code** - CLI agent
+- **GitHub Copilot** - Code completion+
+
+  </div>
+  <div class="column fragment">
+
+### General Purpose
+- **Claude Desktop** - File access, shell commands
+- **ChatGPT** - Browse, analyze, execute
+- **Custom agents** - Your own tools
+
+  </div>
+</div>
+
+Note: These aren't hypothetical. You can use these TODAY. Cursor and Windsurf are full IDEs with AI that can refactor entire codebases. Claude Code works from the command line and can understand whole projects. Claude Desktop can read your files, run shell commands, analyze data. These agents have real capabilities and real limitations - which brings us to the problem.
+
+---
+
+## What Can These Agents Actually Do?
+
+<div class="columns" style="margin-top: 30px;">
+  <div class="column">
+
+**Impressive Built-in Capabilities:**
+- 📁 Read/write files
+- 🖥️ Execute commands
+- 🔍 Search codebases
+- 📊 Analyze data
+- 🌐 Browse web
+- 🔧 Debug & fix code
+- 🧪 Run tests
+
+  </div>
+  <div class="column fragment">
+
+**The Gap:**
+- ❌ Can't access YOUR database
+- ❌ Can't post to YOUR Slack
+- ❌ Can't create YOUR Jira tickets
+- ❌ Can't query YOUR CRM
+- ❌ Can't deploy to YOUR servers
+- ❌ Can't read YOUR internal docs
+
+  </div>
+</div>
+
+Note: Here's where it gets interesting. These agents are incredibly powerful with generic tasks. Claude Code can refactor your entire codebase. Cursor can implement complex features. But they hit a wall when it comes to YOUR specific infrastructure. They can write code but can't deploy it to your Kubernetes cluster. They can draft tickets but can't create them in your Jira. There's a fundamental disconnect.
+
+---
+
+## Real Example: A Day with Claude Code
+
+```bash
+User: "Refactor the auth system to use OAuth2"
+Claude Code: *reads files* *updates code* *runs tests*
+Result: ✅ Code refactored, tests passing
+
+User: "Deploy to staging and notify the team"
+Claude Code: "I cannot access your deployment system"
+Claude Code: "I cannot post to your Slack workspace"
+User: *copies deploy command* *runs manually* *opens Slack*
+```
+
+<p class="fragment" style="margin-top: 30px; color: #e74c3c;">
+Back to manual work... 😔
+</p>
+
+Note: Here's the reality we all live with. Claude Code brilliantly refactors your authentication system, updates all the tests, makes sure everything works. But then you hit the wall. It can't deploy to your staging environment. Can't notify your team on Slack. Can't create the PR in GitHub. Suddenly you're back to being a human API - copying, pasting, clicking through UIs. The AI did the hard part but you're stuck doing the integration work.
+
+---
+
 <!-- .slide: data-background-color="#e74c3c" -->
 
 # The Problem
@@ -20,9 +121,9 @@ Note: Welcome! Today we're exploring MCP - Model Context Protocol - and why it's
 
 ### N AI Apps
 
+- Claude Desktop
 - ChatGPT
-- Claude
-- Copilot
+- Cursor/Windsurf
 - Custom agents
 
   </div>

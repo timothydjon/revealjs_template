@@ -96,15 +96,6 @@ _[45 seconds]_
 
 Here's a real-world example - Slack integration.
 
-Intensität
-
-10,60 €
-Enthält 20% MwSt.
-zzgl. Versand
-Lieferzeit: ca. 10 Werktage
-50 % Bio Robusta
-50 % Bio Arabica
-
 We create an MCP server called "slack". First tool: send_message. It takes a channel and text, uses the official Slack SDK to post the message, returns the result.
 
 Second tool: get_history. Fetches recent messages from a channel.
