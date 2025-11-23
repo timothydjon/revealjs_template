@@ -16,8 +16,8 @@ Note: Welcome! Today we're exploring MCP - Model Context Protocol - and why it's
 ## The Brain in a Jar Problem
 
 <div style="text-align: center; margin: 40px 0;">
-<h1>🧠</h1>
-<p style="font-size: 0.9em; color: #fff;">LLMs are trapped behind text boxes</p>
+<i class="fas fa-brain" style="font-size: 5em; color: #fff;"></i>
+<p style="font-size: 0.9em; color: #fff; margin-top: 20px;">LLMs are trapped behind text boxes</p>
 </div>
 
 <div class="columns" style="margin-top: 40px;">
@@ -54,7 +54,7 @@ Note: LLMs are incredibly smart but isolated. They can discuss work eloquently b
 ## The Solution: MCP = USB-C for AI
 
 <div style="text-align: center; margin: 40px 0;">
-<h1 style="font-size: 3em;">🔌</h1>
+<i class="fas fa-plug" style="font-size: 5em; color: #fff;"></i>
 </div>
 
 **Model Context Protocol** - One standard, infinite connections
