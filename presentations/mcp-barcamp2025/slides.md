@@ -18,16 +18,13 @@ Note: Welcome! Today we're exploring MCP - Model Context Protocol - and why it's
 **Not just chatbots anymore**
 
 AI systems that can:
+
 - Understand complex goals
 - Break down tasks into steps
 - Use tools to take actions
 - Iterate until completion
 
 </div>
-
-<p class="fragment" style="margin-top: 40px; font-size: 1.2em;">
-They <strong>do work</strong>, not just talk about it
-</p>
 
 Note: Let's start with basics. AI agents are fundamentally different from chatbots. Chatbots respond to messages. Agents actually DO things. They take your high-level goal, figure out the steps, use tools, and execute until the job is done. Think of it as the difference between a consultant who gives advice versus an assistant who actually does the work.
 
@@ -36,9 +33,10 @@ Note: Let's start with basics. AI agents are fundamentally different from chatbo
 ## Modern AI Agents You Can Use Today
 
 <div class="columns">
-  <div class="column">
+  <div class="column fragment">
 
 ### Coding Assistants
+
 - **Cursor** - AI-powered IDE
 - **Windsurf** - Agentic editor
 - **Claude Code** - CLI agent
@@ -48,6 +46,7 @@ Note: Let's start with basics. AI agents are fundamentally different from chatbo
   <div class="column fragment">
 
 ### General Purpose
+
 - **Claude Desktop** - File access, shell commands
 - **ChatGPT** - Browse, analyze, execute
 - **Custom agents** - Your own tools
@@ -61,10 +60,11 @@ Note: These aren't hypothetical. You can use these TODAY. Cursor and Windsurf ar
 
 ## What Can These Agents Actually Do?
 
-<div class="columns" style="margin-top: 30px;">
-  <div class="column">
+<div class="columns" style="margin-top: 30px;font-size: 0.8em;">
+  <div class="column fragment">
 
 **Impressive Built-in Capabilities:**
+
 - 📁 Read/write files
 - 🖥️ Execute commands
 - 🔍 Search codebases
@@ -74,9 +74,10 @@ Note: These aren't hypothetical. You can use these TODAY. Cursor and Windsurf ar
 - 🧪 Run tests
 
   </div>
-  <div class="column fragment">
+  <div class="column fragment" style="font-size: 0.8em;">
 
 **The Gap:**
+
 - ❌ Can't access YOUR database
 - ❌ Can't post to YOUR Slack
 - ❌ Can't create YOUR Jira tickets
@@ -166,15 +167,33 @@ Note: Modern AI agents need access to YOUR data. But every tool requires custom 
 
 <!-- .slide: data-background-color="#16a085" -->
 
-# Enter MCP
+<div style="text-align: center;">
 
-**Model Context Protocol**
+# <i class="fas fa-plug" style="color: #fff;"></i> Enter MCP
 
-Universal standard for connecting AI to data
+<h2 style="color: #ecf0f1; font-weight: 300; margin: 30px 0; font-size: 1.8em;">
+Model Context Protocol
+</h2>
 
-<p style="font-size: 0.9em; margin-top: 40px;">Like USB-C for AI agents</p>
+<div style="background: rgba(255,255,255,0.15); padding: 30px; border-radius: 15px; margin: 40px auto; max-width: 800px;">
+<p style="font-size: 1.3em; color: #fff; margin: 0; line-height: 1.6;">
+Universal standard for connecting<br/>AI agents to data sources
+</p>
+</div>
 
-Note: MCP is an open protocol. One standard way to connect any AI to any data source. Write once, use everywhere.
+<div class="fragment" style="margin-top: 40px;">
+<p style="font-size: 1.4em; color: #fff;">
+<i class="fas fa-usb"></i> Like USB-C for AI agents
+</p>
+</div>
+
+<div class="fragment" style="margin-top: 50px; font-size: 0.9em; color: #ecf0f1; opacity: 0.9;">
+<i class="fas fa-info-circle"></i> Created by Anthropic • Late 2024 • Open Protocol
+</div>
+
+</div>
+
+Note: Anthropic created MCP in late 2024 and released it as an open protocol - not proprietary, not locked to Claude. They saw this N×M problem coming and decided to solve it at the industry level. The vision: create a universal standard like USB-C, where any AI agent can connect to any data source through one protocol. Write an MCP server once for Slack, and suddenly every MCP-compatible agent - Claude, Cursor, your custom tools - can use it. Write an MCP client once in your agent, and it can connect to thousands of data sources. One protocol to rule them all.
 
 ---
 
@@ -344,6 +363,10 @@ Google Drive • Slack • GitHub • PostgreSQL • MongoDB • Filesystem • 
 
 <p style="margin-top: 40px;">Thousands of community servers available</p>
 
+<p style="font-size: 0.9em; margin-top: 20px;">
+<i class="fas fa-link"></i> <a href="https://mcpmarket.com/server" target="_blank">mcpmarket.com/server</a>
+</p>
+
 Note: This isn't theoretical. Pre-built servers exist for common services. Major AI companies and dev tools have adopted MCP. The ecosystem is growing fast.
 
 ---
@@ -389,6 +412,73 @@ Note: Instead of N×M integrations, write ONE MCP server. Every MCP-compatible A
 
 ---
 
+<!-- .slide: data-background-color="#2c3e50" -->
+
+## The Vision
+
+> "Open technologies like MCP are bridges that connect AI to real-world applications"
+>
+> <small>— Jack Dorsey, Block CTO</small>
+
+<div style="margin-top: 50px;">
+
+- Any AI agent + Any data source
+- Write once, use everywhere
+- Open standard, not vendor lock-in
+
+</div>
+
+Note: We're building the infrastructure layer for AI. One standard protocol so any agent can access any data. Open source, community-driven.
+
+---
+
+## Future of MCP
+
+<div style="margin-top: 30px;">
+
+**MCP Apps:** Standalone applications powered by MCP
+
+</div>
+
+<div class="columns" style="margin-top: 40px;">
+  <div class="column fragment">
+
+### Traditional MCP
+- Servers expose data/tools
+- AI agents consume them
+- Client ↔ Server model
+
+  </div>
+  <div class="column fragment">
+
+### MCP Apps
+- Full applications built on MCP
+- Native MCP integration
+- Unified AI ecosystem
+
+  </div>
+</div>
+
+Note: MCP is evolving beyond just servers. Now we're seeing full applications built with native MCP integration. Instead of just exposing data through MCP servers, these are complete apps that use MCP as their foundation. This creates a unified ecosystem where any AI can seamlessly work with any MCP-native application.
+
+---
+
+<!-- .slide: data-background-color="#c0392b" -->
+
+## Problems to Solve
+
+<div style="margin-top: 60px; font-size: 1.3em;">
+
+- MCP tool definitions consume tokens
+- Playwright MCP: ~14k tokens
+- Too many tools overwhelm agents
+
+</div>
+
+Note: MCP isn't perfect yet. Each MCP server's tool definitions eat into your token budget - Playwright MCP alone uses about 14k tokens just for tool definitions. And when you combine multiple servers, too many tools can confuse the agent. These are active areas of development.
+
+---
+
 ## Getting Started
 
 ```bash
@@ -416,50 +506,6 @@ Note: Getting started is straightforward. Install SDK, wrap your code, run it. T
 
 ---
 
-<!-- .slide: data-background-color="#2c3e50" -->
-
-## The Vision
-
-> "Open technologies like MCP are bridges that connect AI to real-world applications"
->
-> <small>— Jack Dorsey, Block CTO</small>
-
-<div style="margin-top: 50px;">
-
-- Any AI agent + Any data source
-- Write once, use everywhere
-- Open standard, not vendor lock-in
-
-</div>
-
-Note: We're building the infrastructure layer for AI. One standard protocol so any agent can access any data. Open source, community-driven.
-
----
-
-<!-- .slide: class="title-slide" data-background-color="#16a085" -->
-
-# Call to Action
-
-<div style="margin-top: 50px;">
-
-## <i class="fas fa-code"></i> Start Building
-
-Pick one data source, create an MCP server
-
-## <i class="fas fa-users"></i> Join the Community
-
-GitHub • Discord • Open source
-
-## <i class="fas fa-rocket"></i> Stop one-off integrations
-
-Build for the ecosystem
-
-</div>
-
-Note: Start small - pick one data source and build an MCP server. Join the community. Most importantly, stop building one-off integrations. Build MCP servers that work with every AI tool.
-
----
-
 ## Resources
 
 <div class="columns">
@@ -472,6 +518,14 @@ Note: Start small - pick one data source and build an MCP server. Join the commu
 ### GitHub
 
 [github.com/modelcontextprotocol](https://github.com/modelcontextprotocol)
+
+### Blog
+
+[Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp)
+
+[MCP Apps](https://blog.modelcontextprotocol.io/posts/2025-11-21-mcp-apps/)
+
+[What if you don't need MCP?](https://mariozechner.at/posts/2025-11-02-what-if-you-dont-need-mcp/)
 
   </div>
   <div class="column">
