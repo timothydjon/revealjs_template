@@ -309,20 +309,24 @@ Note: Database server with security. Only allows SELECT queries. AI can explore 
 ```json
 // Client → Server
 {
+  "jsonrpc": "2.0",
   "method": "tools/call",
   "params": {
     "name": "get_customer",
     "arguments": {"customer_id": "12345"}
-  }
+  },
+  "id": 1
 }
 
 // Server → Client
 {
+  "jsonrpc": "2.0",
   "result": {
     "name": "Acme Corp",
     "email": "contact@acme.com",
     "status": "active"
-  }
+  },
+  "id": 1
 }
 ```
 
