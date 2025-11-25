@@ -527,6 +527,10 @@ Note: Getting started is straightforward. Install SDK, wrap your code, run it. T
 
 [What if you don't need MCP?](https://mariozechner.at/posts/2025-11-02-what-if-you-dont-need-mcp/)
 
+### Video
+
+[MCP Explained](https://www.youtube.com/watch?v=HyzlYwjoXOQ&t=110s)
+
   </div>
   <div class="column">
 
@@ -560,10 +564,8 @@ Note: All resources you need. Full documentation, examples, SDKs. Everything is 
 
 ## Questions?
 
-<div class="author" style="margin-top: 60px;">
-  <i class="fas fa-globe"></i> modelcontextprotocol.io<br>
-  <i class="fab fa-github"></i> github.com/modelcontextprotocol<br>
-  <i class="fas fa-code"></i> Start building with MCP today!
+<div style="margin-top: 60px;">
+  <a href="https://timothydjon.github.io/revealjs_template/" target="_blank">timothydjon.github.io/revealjs_template</a>
 </div>
 
 Note: Thanks for your attention! I'm excited to answer questions about MCP, implementation details, use cases, or anything else.

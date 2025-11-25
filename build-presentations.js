@@ -29,11 +29,11 @@ async function buildPresentations() {
     await fs.rm(distDir, { recursive: true, force: true });
     await fs.mkdir(distDir, { recursive: true });
 
-    // Copy base files (index.html, src, node_modules)
+    // Copy base files (index.html, src, and reveal.js from node_modules)
     const baseFiles = [
         { src: 'index.html', dest: 'index.html' },
         { src: 'src', dest: 'src' },
-        { src: 'node_modules', dest: 'node_modules' }
+        { src: 'node_modules/reveal.js', dest: 'node_modules/reveal.js' }
     ];
 
     // Get all presentation directories
@@ -52,29 +52,14 @@ async function buildPresentations() {
 
         // Copy base files to presentation directory
         for (const file of baseFiles) {
-            if (file.src === 'node_modules') {
-                // Create symlink for node_modules to save space
-                await fs.symlink(
-                    path.join(__dirname, file.src),
-                    path.join(outputPath, file.dest),
-                    'junction'
-                ).catch(() => {
-                    // If symlink fails, copy normally
-                    return copyRecursive(
-                        path.join(__dirname, file.src),
-                        path.join(outputPath, file.dest)
-                    );
-                });
-            } else if (file.src === 'src') {
-                await copyRecursive(
-                    path.join(__dirname, file.src),
-                    path.join(outputPath, file.dest)
-                );
+            const srcPath = path.join(__dirname, file.src);
+            const destPath = path.join(outputPath, file.dest);
+            const stat = await fs.stat(srcPath);
+
+            if (stat.isDirectory()) {
+                await copyRecursive(srcPath, destPath);
             } else {
-                await fs.copyFile(
-                    path.join(__dirname, file.src),
-                    path.join(outputPath, file.dest)
-                );
+                await fs.copyFile(srcPath, destPath);
             }
         }
 
