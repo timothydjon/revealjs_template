@@ -58,6 +58,15 @@ async function buildPresentations() {
 
             if (stat.isDirectory()) {
                 await copyRecursive(srcPath, destPath);
+            } else if (file.src === 'index.html') {
+                // Read index.html and fix the markdown path
+                let content = await fs.readFile(srcPath, 'utf-8');
+                // Replace any data-markdown path to point to slides/presentation.md
+                content = content.replace(
+                    /data-markdown="[^"]*"/g,
+                    'data-markdown="slides/presentation.md"'
+                );
+                await fs.writeFile(destPath, content);
             } else {
                 await fs.copyFile(srcPath, destPath);
             }
