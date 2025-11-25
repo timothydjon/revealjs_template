@@ -118,7 +118,7 @@ Note: Here's the reality we all live with. Claude Code brilliantly refactors you
 # The Problem
 
 <div class="columns">
-  <div class="column">
+  <div class="column fragment">
 
 ### N AI Apps
 
@@ -128,7 +128,7 @@ Note: Here's the reality we all live with. Claude Code brilliantly refactors you
 - Custom agents
 
   </div>
-  <div class="column">
+  <div class="column fragment">
 
 ### M Data Sources
 
@@ -143,25 +143,6 @@ Note: Here's the reality we all live with. Claude Code brilliantly refactors you
 <h2 class="fragment" style="color: #fff; margin-top: 40px;">= N×M custom integrations</h2>
 
 Note: Every AI app needs custom code for every data source. 5 apps × 10 sources = 50 integrations. This doesn't scale.
-
----
-
-## Today's Reality
-
-```python
-# Every AI tool needs its own integration
-chatgpt_slack = SlackAPI(token_1)
-claude_github = GitHubAPI(credentials)
-copilot_db = PostgreSQL(conn)
-
-# Different APIs, different auth, different patterns
-```
-
-<p class="fragment" style="color: #e74c3c; margin-top: 30px;">
-<i class="fas fa-times"></i> Fragmented • Duplicated • Doesn't scale
-</p>
-
-Note: Modern AI agents need access to YOUR data. But every tool requires custom integrations. We're all solving the same problem repeatedly.
 
 ---
 
